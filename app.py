@@ -7,6 +7,10 @@ app = Flask(__name__)
 
 def remove_background_rembg(image_stream):
     input_image = Image.open(image_stream)
+    # Resize if too large
+    max_size = 720
+    if max(input_image.size) > max_size:
+        input_image.thumbnail((max_size, max_size))
     output_image = remove(input_image)
     return output_image
 
