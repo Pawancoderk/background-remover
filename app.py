@@ -10,7 +10,7 @@ def remove_background_rembg(image_stream):
     output_image = remove(input_image)
     return output_image
 
-app = Flask(__name__)
+
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
