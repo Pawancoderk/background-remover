@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Image Background Remover</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'Inter', Arial, sans-serif;
+            background: linear-gradient(135deg, #e0e7ff 0%, #fbeee6 100%);
+            display: flex;
+            flex-direction: column;
+        }
+        .main-card {
+            background: #fff;
+            padding: 2.5rem 2.2rem 2rem 2.2rem;
+            border-radius: 20px;
+            max-width: 420px;
+            margin: 56px auto 24px auto;
+            box-shadow: 0 8px 32px rgba(60,60,120,0.10), 0 1.5px 6px rgba(0,0,0,0.09);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h2 {
+            margin-top: 0;
+            font-weight: 600;
+            color: #3d3d5c;
+            letter-spacing: 0.03em;
+        }
+        form {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .file-upload {
+            margin-bottom: 18px;
+            width: 100%;
+        }
+        .color-inputs {
+            background: #f6f8fa;
+            border-radius: 8px;
+            padding: 12px 10px 8px 10px;
+            margin-bottom: 18px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        .color-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 7px;
+        }
+        .color-row label {
+            min-width: 78px;
+            font-size: 0.98em;
+            color: #555;
+        }
+        .color-row input {
+            width: 56px;
+            margin-right: 7px;
+            padding: 6px 4px;
+            font-size: 1em;
+            border: 1px solid #d1d5db;
+            border-radius: 5px;
+            background: #fff;
+        }
+        .color-row input:last-child {
+            margin-right: 0;
+        }
+        .preview {
+            margin-bottom: 18px;
+            width: 100%;
+            text-align: center;
+        }
+        #img-preview {
+            max-width: 100%;
+            max-height: 180px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            display: none;
+            margin: 0 auto 8px auto;
+        }
+        button[type="submit"] {
+            background: linear-gradient(90deg, #6366f1 0%, #f472b6 100%);
+            color: #fff;
+            border: none;
+            padding: 12px 36px;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: 600;
+            letter-spacing: 0.03em;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(99,102,241,0.10);
+            transition: background 0.2s, transform 0.1s;
+        }
+        button[type="submit"]:hover {
+            background: linear-gradient(90deg, #4f46e5 0%, #ec4899 100%);
+            transform: translateY(-2px) scale(1.03);
+        }
+        .note {
+            margin-top: 18px;
+            color: #7b7b8d;
+            font-size: 0.98em;
+            text-align: center;
+        }
+        footer {
+            text-align: center;
+            color: #aaa;
+            font-size: 1em;
+            margin-bottom: 18px;
+        }
+        @media (max-width: 540px) {
+            .main-card {
+                padding: 1.2rem 0.7rem 1.1rem 0.7rem;
+                max-width: 97vw;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-card">
+        <h2>Image Background Remover</h2>
+        <form method="post" enctype="multipart/form-data">
+            <div class="file-upload">
+                <input type="file" name="image" id="image-input" accept="image/*" required>
+            </div>
+            <div class="preview">
+                <img id="img-preview" src="#" alt="Image Preview" />
+            </div>
+            <div class="color-inputs">
+                <div class="color-row">
+                    <label>Lower RGB:</label>
+                    <input type="number" name="lower_r" value="200" min="0" max="255" required>
+                    <input type="number" name="lower_g" value="200" min="0" max="255" required>
+                    <input type="number" name="lower_b" value="200" min="0" max="255" required>
+                </div>
+                <div class="color-row">
+                    <label>Upper RGB:</label>
+                    <input type="number" name="upper_r" value="255" min="0" max="255" required>
+                    <input type="number" name="upper_g" value="255" min="0" max="255" required>
+                    <input type="number" name="upper_b" value="255" min="0" max="255" required>
+                </div>
+            </div>
+            <button type="submit">Remove Background</button>
+        </form>
+        <div class="note">Works best with solid color backgrounds (e.g., white, green, blue).</div>
+    </div>
+    <footer>
+        &copy; 2025 Image Background Remover &mdash; by <a href="https://cascade.codeium.com/" style="color:#bbb;text-decoration:none;">Cascade AI</a>
+    </footer>
+    <script>
+        // Image preview
+        const input = document.getElementById('image-input');
+        const preview = document.getElementById('img-preview');
+        input.addEventListener('change', function(e) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(ev) {
+                    preview.src = ev.target.result;
+                    preview.style.display = 'block';
+                }
+                reader.readAsDataURL(input.files[0]);
+            } else {
+                preview.src = '#';
+                preview.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
